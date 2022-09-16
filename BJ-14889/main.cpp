@@ -21,10 +21,11 @@ vector<int> team_B;
 
 
 void make_team(int pos, int cnt) {
-	
+	team_A.clear();
+	team_B.clear();
 	if (cnt == (n / 2)) {
 		for (int i = 0; i < n; i++) {
-			if (team[i]0 == true) {
+			if (team[i] == true) {
 				team_A.push_back(i);
 			}
 			else
