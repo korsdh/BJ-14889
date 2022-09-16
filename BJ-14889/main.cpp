@@ -8,47 +8,45 @@
 
 using namespace std;
 
-int ability[21][21];
+int ability[20][20];
 int n;
-int answer = INT_MAX;
-bool visit[21];
+int answer = 999;
+bool team[21];
 vector<int> A;
 vector<int> B;
-vector<pair<int, int>> team_A;
-int team_An = 0;
-int team_Bn = 0;
-vector<pair<int, int>> team_B;
+vector<int> team_A;
+int team_An = 0; // 팀A의 능력치의 합
+int team_Bn = 0; // 팀B의 능력치의 합
+vector<int> team_B;
 
-void P(int num) {
-	for (int i = 1; i < A.size(); i++) {
-		if ((num + i) >= A.size()) return;
-		team_A.push_back(make_pair(A[num], A[num + i]));
-		team_B.push_back(make_pair(B[num], B[num + 1]));
-		P(num + 1);
-	}
-	
-}
 
-void make_team(int num) {
-	if (num == (n / 2)) {
+void make_team(int pos, int cnt) {
+	if (cnt == (n / 2)) {
 		for (int i = 0; i < n; i++) {
-			if (visit[i] == false) {
-				B.push_back(i);
+			if (team[i] == true) {
+				team_A.push_back(i);
+			}
+			else
+			{
+				team_B.push_back(i);
 			}
 		}
-		P(0);
-		for (int i = 0; i < team_A.size(); i++) {
-			team_An += (ability[team_A[i].first][team_A[i].second] + ability[team_A[i].second][team_A[i].first]);
-			team_Bn += (ability[team_B[i].first][team_B[i].second] + ability[team_B[i].second][team_B[i].first]);
+		for (int i = 0; i < (n / 2); i++) {
+			for (int j = 0; j < (n / 2); j++) {
+				team_An += (ability[team_A[i]][team_A[j]] + ability[team_A[j]][team_A[i]]);
+				team_Bn += (ability[team_B[i]][team_B[j]] + ability[team_B[j]][team_B[i]]);
+			}
+			break;
 		}
 		int result = abs(team_An - team_Bn);
 		answer = min(answer, result);
+		return;
 	}
-	for (int i = 0; i < n;i++) {
-		A.push_back(i);
-		visit[i] = true;
-		make_team(num + 1);
-		visit[i] = false;
+	for (int i = pos; i < n; i++) {
+		if (team[i] == true) continue;
+		team[i] = true;
+		make_team(i, cnt + 1);
+		team[i] = false;
 	}
 }
 
@@ -60,7 +58,7 @@ int main() {
 			cin >> ability[i][j];
 		}
 	}
-	make_team(0);
+	make_team(0,0);
 	cout << answer << endl;
 	return 0;
 }
