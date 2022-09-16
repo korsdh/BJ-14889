@@ -21,9 +21,10 @@ vector<int> team_B;
 
 
 void make_team(int pos, int cnt) {
+	
 	if (cnt == (n / 2)) {
 		for (int i = 0; i < n; i++) {
-			if (team[i] == true) {
+			if (team[i]0 == true) {
 				team_A.push_back(i);
 			}
 			else
@@ -31,6 +32,8 @@ void make_team(int pos, int cnt) {
 				team_B.push_back(i);
 			}
 		}
+		team_An = 0;
+		team_Bn = 0;
 		for (int i = 0; i < (n / 2); i++) {
 			for (int j = 0; j < (n / 2); j++) {
 				team_An += (ability[team_A[i]][team_A[j]] + ability[team_A[j]][team_A[i]]);
