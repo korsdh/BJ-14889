@@ -60,4 +60,7 @@ int main() {
 			cin >> ability[i][j];
 		}
 	}
+	make_team(0);
+	cout << answer << endl;
+	return 0;
 }
