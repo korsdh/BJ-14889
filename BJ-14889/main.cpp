@@ -15,9 +15,9 @@ bool team[21];
 vector<int> A;
 vector<int> B;
 vector<int> team_A;
+vector<int> team_B;
 int team_An = 0; // 팀A의 능력치의 합
 int team_Bn = 0; // 팀B의 능력치의 합
-vector<int> team_B;
 
 
 void make_team(int pos, int cnt) {
@@ -43,7 +43,9 @@ void make_team(int pos, int cnt) {
 			break;
 		}
 		int result = abs(team_An - team_Bn);
-		answer = min(answer, result);
+		if (result < answer) {
+			answer = result;
+		}
 		return;
 	}
 	for (int i = pos; i < n; i++) {
