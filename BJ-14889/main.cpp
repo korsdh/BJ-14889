@@ -25,36 +25,29 @@ int testB[21];
 void make_team(int pos, int cnt) {
 	team_A.clear();
 	team_B.clear();
+	team_An = 0;
+	team_Bn = 0;
 	if (cnt == (n / 2)) {
 		for (int i = 0; i < n; i++) {
 			if (team[i] == true) {
 				team_A.push_back(i);
 			}
-			else
-			{
+			else {
 				team_B.push_back(i);
 			}
 		}
-		team_An = 0;
-		team_Bn = 0;
 		for (int i = 0; i < (n / 2); i++) {
 			for (int j = 0; j < (n / 2); j++) {
-				team_An += (ability[team_A[i]][team_A[j]] + ability[team_A[j]][team_A[i]]);
-				team_Bn += (ability[team_B[i]][team_B[j]] + ability[team_B[j]][team_B[i]]);
+				team_An += ability[team_A[i]][team_A[j]];
+				team_Bn += ability[team_B[i]][team_B[j]];
 			}
-			break;
 		}
-		int result = abs(team_An - team_Bn);
-		if (result < answer) {
-			for (int i = 0; i < (n / 2); i++) {
-				testA[i] = team_A[i];
-				testB[i] = team_B[i];
-			}
-			answer = result;
+		if (abs(team_An - team_Bn) < answer) {
+			answer = abs(team_An - team_Bn);
 		}
 		return;
 	}
-	for (int i = 0; i < n; i++) {
+	for (int i = pos; i < n; i++) {
 		if (team[i] == true) continue;
 		team[i] = true;
 		make_team(i, cnt + 1);
@@ -76,13 +69,13 @@ int main() {
 	cout << "team A: ";
 	for (int i = 0; i < (n / 2); i++) {
 		
-		cout << testA[i] << " ";
+		cout << testA[i] + 1 << " ";
 	}
 	cout << endl;
 	cout << "team B: ";
 
 	for (int i = 0; i < (n / 2); i++) {
-		cout << testB[i] << " ";
+		cout << testB[i] + 1 << " ";
 	}
 	cout << endl;
 	return 0;
